@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Odin Tic Tac Toe</title>
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">TIC TAC TOE</header>
+			<main class="main">
+				<div class="game-stats">
+					<button class="toggle-game-mode">start two player</button>
+					<span class="label first-player">player wins</span>
+					<span class="ties">ties</span>
+					<span class="label second-player">player wins</span>
+					<div class="first-player-wins">
+						<span class="material-icons tag">close</span>
+						<span class="wins">-</span>
+					</div>
+					<span class="num-of-ties">1</span>
+					<div class="second-player-wins">
+						<span class="material-icons tag">radio_button_unchecked</span>
+						<span class="wins">24</span>
+					</div>
+					<div class="player-turn">X turn</div>
+				</div>
+				<div class="gameboard-container">
+					<div class="gameboard">
+						<div class="grid" data-index="0" data-selected="false">
+							<span class="material-icons circle">radio_button_unchecked</span>
+						</div>
+						<div class="grid" data-index="1" data-selected="false">
+							<span class="material-icons cross">close</span>
+						</div>
+						<div class="grid" data-index="2" data-selected="false">
+							<span class="material-icons cross">close</span>
+						</div>
+						<div class="grid" data-index="3" data-selected="false">
+							<span class="material-icons circle">radio_button_unchecked</span>
+						</div>
+						<div class="grid" data-index="4" data-selected="false">
+							<span class="material-icons cross">close</span>
+						</div>
+						<div class="grid" data-index="5" data-selected="false">
+							<span class="material-icons circle">radio_button_unchecked</span>
+						</div>
+						<div class="grid" data-index="6" data-selected="false">
+							<span class="material-icons cross">close</span>
+						</div>
+						<div class="grid" data-index="7" data-selected="false">
+							<span class="material-icons circle">radio_button_unchecked</span>
+						</div>
+						<div class="grid" data-index="8" data-selected="false">
+							<span class="material-icons circle">radio_button_unchecked</span>
+						</div>
+					</div>
+				</div>
+				<button class="restart">restart game</button>
+			</main>
+		</div>
+		<script src="app.js"></script>
+	</body>
+</html>

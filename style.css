@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100;8..144,200;8..144,300;8..144,400;8..144,700&display=swap");
+
+:root {
+	--primary-color: #14bdac;
+	--text-color: #9aa0a6;
+	--secondary-color: #ffffff;
+	--circle-color: #f2ebd3;
+	--xcolor: #545454;
+}
+/* basic reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	font-size: 62.5%;
+}
+body {
+	font-family: "Roboto Flex", sans-serif;
+	font-size: 1.4rem;
+	background-color: #202124;
+	color: var(--text-color);
+	height: 100vh;
+	/* display: flex; */
+}
+.container {
+	max-width: 80rem;
+	margin: auto;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.5rem;
+	padding: 2rem 0;
+}
+.main {
+	display: flex;
+	flex-direction: column;
+	padding-top: 5rem;
+}
+.gameboard-container {
+	background-color: var(--primary-color);
+}
+.material-icons {
+	font-weight: 700;
+	font-size: 2.8rem;
+}
+.circle {
+	color: var(--circle-color);
+}
+.cross {
+	color: var(--xcolor);
+}
+.header {
+	/* background-color: var(--primary-color); */
+	color: var(--secondary-color);
+	padding: 1rem;
+	text-align: center;
+	font-weight: 700;
+}
+.game-stats {
+	padding: 2rem;
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr 1fr 1fr 3fr 1fr;
+	grid-template-rows: repeat(4, 1fr);
+	gap: 1rem;
+	/* place-items: center; */
+}
+.toggle-game-mode {
+	grid-area: 1 / 1 / 2 / 3;
+	align-self: start;
+}
+.first-player {
+	grid-area: 2 / 2 / 3 / 4;
+	text-align: center;
+}
+.ties {
+	grid-area: 2 / 4 / 3 / 5;
+	display: grid;
+	place-items: center;
+}
+.second-player {
+	grid-area: 2 / 5 / 3 / 7;
+	text-align: center;
+}
+.first-player-wins {
+	grid-area: 3 / 2 / 4 / 4;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 2.4rem;
+	padding: 0 2rem;
+}
+.num-of-ties {
+	grid-area: 3 / 4 / 4 / 5;
+	display: grid;
+	place-items: center;
+}
+.second-player-wins {
+	grid-area: 3 / 5 / 4 / 7;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 2.4rem;
+	padding: 0 2rem;
+}
+.player-turn {
+	grid-area: 4 / 3 / 5 / 6;
+	place-self: center;
+}
+.label {
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.5rem;
+	padding: 1rem 1.5rem;
+	border-bottom: 3px solid var(--primary-color);
+}
+.gameboard-container {
+	display: grid;
+	place-content: center;
+	margin-bottom: 2rem;
+}
+.gameboard {
+	display: grid;
+	grid-template-columns: repeat(3, 6rem);
+	grid-template-rows: repeat(3, 6rem);
+	place-items: stretch;
+	padding: 2rem;
+}
+.gameboard > div {
+	border: 4px solid rgba(0, 0, 0, 0.3);
+	display: grid;
+	place-items: center;
+}
+.gameboard > div[data-index="0"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-left: none;
+	border-top: none;
+}
+.gameboard > div[data-index="1"] {
+	border-top: none;
+}
+.gameboard > div[data-index="2"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-right: none;
+	border-top: none;
+}
+.gameboard > div[data-index="3"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-left: none;
+}
+.gameboard > div[data-index="5"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-right: none;
+}
+.gameboard > div[data-index="6"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-left: none;
+	border-bottom: none;
+}
+.gameboard > div[data-index="7"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-bottom: none;
+}
+.gameboard > div[data-index="8"] {
+	/* grid-area: 1 / 1 / 2 / 2; */
+	border-right: none;
+	border-bottom: none;
+}
+button {
+	border: none;
+	outline: 1px solid var(--primary-color);
+	color: var(--primary-color);
+	padding: 1rem;
+	background-color: transparent;
+	border-radius: 0.5rem;
+}
+button:hover {
+	color: var(--xcolor);
+	background-color: var(--primary-color);
+}
+.restart {
+	align-self: center;
+}
