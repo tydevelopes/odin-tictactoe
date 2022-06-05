@@ -215,4 +215,8 @@ const game = (() => {
 
 window.addEventListener("load", () => {
 	game.startGame("1");
+	// get current player
+	document.querySelector(".player-turn").textContent = `${game.getCurrentPlayer().name} (${
+		game.getCurrentPlayer().tag
+	}) turn`;
 });
