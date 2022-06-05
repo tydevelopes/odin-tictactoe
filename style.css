@@ -41,13 +41,15 @@ body {
 }
 .material-icons {
 	font-weight: 700;
-	font-size: 2.8rem;
+	font-size: 3.8rem;
 }
 .circle {
 	color: var(--circle-color);
+	opacity: 0;
 }
 .cross {
 	color: var(--xcolor);
+	opacity: 0;
 }
 .header {
 	/* background-color: var(--primary-color); */
@@ -116,6 +118,7 @@ body {
 	display: grid;
 	place-content: center;
 	margin-bottom: 2rem;
+	position: relative;
 }
 .gameboard {
 	display: grid;
@@ -178,4 +181,27 @@ button:hover {
 }
 .restart {
 	align-self: center;
+}
+.game-ended {
+	background-color: var(--primary-color);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	color: var(--xcolor);
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
+.game-ended .material-icons {
+	font-size: 15rem;
+}
+.info {
+	font-size: 4rem;
+	font-weight: 400;
+}
+.ended-circle {
+	color: var(--circle-color);
 }

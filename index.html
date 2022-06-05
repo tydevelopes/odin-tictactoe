@@ -21,42 +21,49 @@
 						<span class="material-icons tag">close</span>
 						<span class="wins">-</span>
 					</div>
-					<span class="num-of-ties">1</span>
+					<span class="num-of-ties">-</span>
 					<div class="second-player-wins">
 						<span class="material-icons tag">radio_button_unchecked</span>
-						<span class="wins">24</span>
+						<span class="wins">-</span>
 					</div>
 					<div class="player-turn">X turn</div>
 				</div>
 				<div class="gameboard-container">
 					<div class="gameboard">
-						<div class="grid" data-index="0" data-selected="false">
-							<span class="material-icons circle">radio_button_unchecked</span>
+						<div class="grid" data-index="0" data-row="0" data-col="0" data-selected="false">
+							<!-- <span class="material-icons circle">radio_button_unchecked</span> -->
 						</div>
-						<div class="grid" data-index="1" data-selected="false">
-							<span class="material-icons cross">close</span>
+						<div class="grid" data-index="1" data-row="0" data-col="1" data-selected="false">
+							<!-- <span class="material-icons cross">close</span> -->
 						</div>
-						<div class="grid" data-index="2" data-selected="false">
-							<span class="material-icons cross">close</span>
+						<div class="grid" data-index="2" data-row="0" data-col="2" data-selected="false">
+							<!-- <span class="material-icons cross">close</span> -->
 						</div>
-						<div class="grid" data-index="3" data-selected="false">
-							<span class="material-icons circle">radio_button_unchecked</span>
+						<div class="grid" data-index="3" data-row="1" data-col="0" data-selected="false">
+							<!-- <span class="material-icons circle">radio_button_unchecked</span> -->
 						</div>
-						<div class="grid" data-index="4" data-selected="false">
-							<span class="material-icons cross">close</span>
+						<div class="grid" data-index="4" data-row="1" data-col="1" data-selected="false">
+							<!-- <span class="material-icons cross">close</span> -->
 						</div>
-						<div class="grid" data-index="5" data-selected="false">
-							<span class="material-icons circle">radio_button_unchecked</span>
+						<div class="grid" data-index="5" data-row="1" data-col="2" data-selected="false">
+							<!-- <span class="material-icons circle">radio_button_unchecked</span> -->
 						</div>
-						<div class="grid" data-index="6" data-selected="false">
-							<span class="material-icons cross">close</span>
+						<div class="grid" data-index="6" data-row="2" data-col="0" data-selected="false">
+							<!-- <span class="material-icons cross">close</span> -->
 						</div>
-						<div class="grid" data-index="7" data-selected="false">
-							<span class="material-icons circle">radio_button_unchecked</span>
+						<div class="grid" data-index="7" data-row="2" data-col="1" data-selected="false">
+							<!-- <span class="material-icons circle">radio_button_unchecked</span> -->
 						</div>
-						<div class="grid" data-index="8" data-selected="false">
-							<span class="material-icons circle">radio_button_unchecked</span>
+						<div class="grid" data-index="8" data-row="2" data-col="2" data-selected="false">
+							<!-- <span class="material-icons circle">radio_button_unchecked</span> -->
 						</div>
+					</div>
+					<div class="game-ended">
+						<div class="players-tag">
+							<span class="material-icons ended-circle">radio_button_unchecked</span>
+							<span class="material-icons ended-x">close</span>
+						</div>
+						<div class="info">Draw!</div>
 					</div>
 				</div>
 				<button class="restart">restart game</button>
