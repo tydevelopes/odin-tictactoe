@@ -17,12 +17,12 @@ const gameBoard = (() => {
 
 	const checkWinner = player => {
 		let won = false;
-		winningCombinations.forEach(winningCombination => {
+		for (const winningCombination of winningCombinations) {
 			if (winningCombination.every(value => player.selectedGrids.includes(value))) {
 				won = true;
-				return;
+				break;
 			}
-		});
+		}
 		return won;
 	};
 	return {
@@ -40,6 +40,8 @@ const Player = (name, tag) => {
 };
 
 const makeSelection = (e, player) => {
+	e.stopPropagation();
+	console.log(game.getRound());
 	// if grid not selected
 	if (e.currentTarget.dataset.selected === "false") {
 		if (player.tag === "o") {
@@ -55,16 +57,18 @@ const makeSelection = (e, player) => {
 				[{ opacity: 0, transform: "scale(0.4)" }, { transform: "scale(1.4)" }, { opacity: 1, transform: "scale(1)" }],
 				{
 					fill: "forwards",
-					duration: 500,
+					duration: 200,
 				}
 			);
 		// store player selection
 		player.selection = e.currentTarget.dataset.index;
-		// console.log("player from selection: ", player);
 		game.storePlayerSelection(player);
 		// change player
 		game.setCurrentPlayer(player);
-		game.playGame();
+
+		setTimeout(() => {
+			game.playGame();
+		}, 400);
 	}
 };
 
@@ -80,12 +84,22 @@ const game = (() => {
 	let player1;
 	let player2;
 	let currentPlayer;
-	let round = 1;
+	let round;
 	let won;
-	let numOfGamesWonByPlayer1 = 0;
-	let numOfGamesWonByPlayer2 = 0;
-	let ties = 0;
+	let numOfGamesWonByPlayer1;
+	let numOfGamesWonByPlayer2;
+	let ties;
 
+	const setVariables = () => {
+		player1 = null;
+		player2 = null;
+		currentPlayer = null;
+		round = 1;
+		won = false;
+		numOfGamesWonByPlayer1 = 0;
+		numOfGamesWonByPlayer2 = 0;
+		ties = 0;
+	};
 	// elements to update
 	const player1Wins = document.querySelector(".first-player-wins > .wins");
 	const player2Wins = document.querySelector(".second-player-wins > .wins");
@@ -95,6 +109,7 @@ const game = (() => {
 
 	const reset = () => {
 		round = 1;
+		gameFinished = false;
 		player1.selectedGrids = [];
 		player2.selectedGrids = [];
 		player1.selection = "";
@@ -104,6 +119,9 @@ const game = (() => {
 			el.innerHTML = "";
 		});
 		playerTurn.textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
+		if (currentPlayer.name === "computer") {
+			aiPlay();
+		}
 	};
 
 	// Event listener
@@ -128,24 +146,27 @@ const game = (() => {
 				player2 = Player("computer", "o");
 				break;
 		}
-		// console.log("player1: ", player1);
-		// console.log("player2: ", player2);
 		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
-		// console.log("current player: ", currentPlayer);
+
+		if (currentPlayer.name === "computer") {
+			aiPlay();
+		}
+	};
+	const aiPlay = () => {
+		const nonSelectedBoards = document.querySelectorAll('.gameboard > .grid[data-selected="false"]');
+		//randomly select a board
+		let index = Math.floor(Math.random() * nonSelectedBoards.length);
+		setTimeout(() => {
+			nonSelectedBoards[index].click();
+		}, 200);
 	};
 
 	const playGame = () => {
-		// console.log("player X selections: ", player1.selectedGrids);
-		// console.log("player O selections: ", player2.selectedGrids);
-		if (round < 9) {
+		if (round <= 9) {
 			if (round > 4) {
-				console.log("round: ", round);
 				if (currentPlayer.tag === "x") {
 					won = gameBoard.checkWinner(player2);
-					// console.log("player2: ", player2.selectedGrids);
-					// console.log("won: ", won);
 					if (won) {
-						console.log(`player ${player2.tag} won`);
 						numOfGamesWonByPlayer2++;
 						player2Wins.textContent = numOfGamesWonByPlayer2;
 						document.querySelector(".player-turn").textContent = "Game Over";
@@ -156,12 +177,10 @@ const game = (() => {
 						gameEnded.style.display = "flex";
 						return;
 					}
-				} else {
+				}
+				if (currentPlayer.tag === "o") {
 					won = gameBoard.checkWinner(player1);
-					// console.log("player1: ", player1.selectedGrids);
-					// console.log("won: ", won);
 					if (won) {
-						console.log(`player ${player1.tag} won`);
 						numOfGamesWonByPlayer1++;
 						player1Wins.textContent = numOfGamesWonByPlayer1;
 						document.querySelector(".player-turn").textContent = "Game Over";
@@ -178,9 +197,19 @@ const game = (() => {
 			document.querySelector(".player-turn").textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
 
 			round++;
-			// console.log("game playing round: ", round);
+			if (round > 9) {
+				ties++;
+				numberOfTies.textContent = ties;
+				document.querySelector(".player-turn").textContent = "Game Over";
+				gameEnded.innerHTML = `<div class="players-tag">
+							<span class="material-icons ended-circle">radio_button_unchecked</span>
+							<span class="material-icons ended-x">close</span>
+						</div>
+						<div class="info">Draw!</div>`;
+				gameEnded.style.display = "flex";
+				return;
+			}
 		} else {
-			// console.log("game ended in a tie: ", round);
 			ties++;
 			numberOfTies.textContent = ties;
 			document.querySelector(".player-turn").textContent = "Game Over";
@@ -190,7 +219,10 @@ const game = (() => {
 						</div>
 						<div class="info">Draw!</div>`;
 			gameEnded.style.display = "flex";
-			// reset();
+			return;
+		}
+		if (game.getCurrentPlayer().name === "computer") {
+			game.aiPlay();
 		}
 	};
 	const getCurrentPlayer = () => {
@@ -199,7 +231,8 @@ const game = (() => {
 	const setCurrentPlayer = player => {
 		if (player.tag === "x") {
 			currentPlayer = player2;
-		} else {
+		}
+		if (player.tag === "o") {
 			currentPlayer = player1;
 		}
 	};
@@ -210,10 +243,21 @@ const game = (() => {
 			player2.selectedGrids.push(player.selection);
 		}
 	};
-	return { startGame, getCurrentPlayer, playGame, setCurrentPlayer, storePlayerSelection };
+	const getRound = () => round;
+	return {
+		startGame,
+		getCurrentPlayer,
+		playGame,
+		setCurrentPlayer,
+		storePlayerSelection,
+		aiPlay,
+		setVariables,
+		getRound,
+	};
 })();
 
 window.addEventListener("load", () => {
+	game.setVariables();
 	game.startGame("1");
 	// get current player
 	document.querySelector(".player-turn").textContent = `${game.getCurrentPlayer().name} (${
