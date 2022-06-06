@@ -39,7 +39,7 @@ const Player = (name, tag) => {
 	};
 };
 
-// testing
+// prevent multiple clicks
 let clickCount = 0;
 
 const makeSelection = (e, player) => {
