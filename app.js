@@ -39,36 +39,45 @@ const Player = (name, tag) => {
 	};
 };
 
+// testing
+let clickCount = 0;
+
 const makeSelection = (e, player) => {
 	e.stopPropagation();
-	console.log(game.getRound());
-	// if grid not selected
-	if (e.currentTarget.dataset.selected === "false") {
-		if (player.tag === "o") {
-			e.currentTarget.innerHTML = `<span class="material-icons circle">radio_button_unchecked</span>`;
-		}
-		if (player.tag === "x") {
-			e.currentTarget.innerHTML = `<span class="material-icons cross">close</span>`;
-		}
-		e.currentTarget.dataset.selected = "true";
-		e.currentTarget
-			.querySelector(".material-icons")
-			.animate(
-				[{ opacity: 0, transform: "scale(0.4)" }, { transform: "scale(1.4)" }, { opacity: 1, transform: "scale(1)" }],
-				{
-					fill: "forwards",
-					duration: 200,
-				}
-			);
-		// store player selection
-		player.selection = e.currentTarget.dataset.index;
-		game.storePlayerSelection(player);
-		// change player
-		game.setCurrentPlayer(player);
+	clickCount++;
+	console.log("click: ", clickCount);
+	setTimeout(() => {
+		clickCount = 0;
+	}, 200);
+	if (clickCount < 2) {
+		// if grid not selected
+		if (e.currentTarget.dataset.selected === "false") {
+			if (player.tag === "o") {
+				e.currentTarget.innerHTML = `<span class="material-icons circle">radio_button_unchecked</span>`;
+			}
+			if (player.tag === "x") {
+				e.currentTarget.innerHTML = `<span class="material-icons cross">close</span>`;
+			}
+			e.currentTarget.dataset.selected = "true";
+			e.currentTarget
+				.querySelector(".material-icons")
+				.animate(
+					[{ opacity: 0, transform: "scale(0.4)" }, { transform: "scale(1.4)" }, { opacity: 1, transform: "scale(1)" }],
+					{
+						fill: "forwards",
+						duration: 200,
+					}
+				);
+			// store player selection
+			player.selection = e.currentTarget.dataset.index;
+			game.storePlayerSelection(player);
+			// change player
+			game.setCurrentPlayer(player);
 
-		setTimeout(() => {
-			game.playGame();
-		}, 400);
+			setTimeout(() => {
+				game.playGame();
+			}, 400);
+		}
 	}
 };
 
