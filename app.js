@@ -107,6 +107,17 @@ const game = (() => {
 	const playerTurn = document.querySelector(".player-turn");
 	const gameEnded = document.querySelector(".game-ended");
 
+	const deactivateBoard = () => {
+		document.querySelectorAll(".gameboard > .grid").forEach(grid => {
+			grid.style.pointerEvents = "none";
+		});
+	};
+	const activateBoard = () => {
+		document.querySelectorAll(".gameboard > .grid").forEach(grid => {
+			grid.style.pointerEvents = "auto";
+		});
+	};
+
 	const reset = () => {
 		round = 1;
 		gameFinished = false;
@@ -122,6 +133,7 @@ const game = (() => {
 		if (currentPlayer.name === "computer") {
 			aiPlay();
 		}
+		activateBoard();
 	};
 
 	// Event listener
@@ -175,6 +187,7 @@ const game = (() => {
 						</div>
 						<div class="info">Winner!</div>`;
 						gameEnded.style.display = "flex";
+						deactivateBoard();
 						return;
 					}
 				}
@@ -189,6 +202,7 @@ const game = (() => {
 						</div>
 						<div class="info">Winner!</div>`;
 						gameEnded.style.display = "flex";
+						deactivateBoard();
 						return;
 					}
 				}
@@ -207,6 +221,7 @@ const game = (() => {
 						</div>
 						<div class="info">Draw!</div>`;
 				gameEnded.style.display = "flex";
+				deactivateBoard();
 				return;
 			}
 		} else {
@@ -219,6 +234,7 @@ const game = (() => {
 						</div>
 						<div class="info">Draw!</div>`;
 			gameEnded.style.display = "flex";
+			deactivateBoard();
 			return;
 		}
 		if (game.getCurrentPlayer().name === "computer") {
