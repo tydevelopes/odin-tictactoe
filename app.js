@@ -120,6 +120,12 @@ const game = (() => {
 	const firstPlayerLabel = document.querySelector(".first-player");
 	const secondPlayerLabel = document.querySelector(".second-player");
 
+	const deactivateSelectModeButton = () => {
+		toggleGameMode.disabled = true;
+	};
+	const activateSelectModeButton = () => {
+		toggleGameMode.disabled = false;
+	};
 	const displayCurrentPlayer = () => {
 		// get current player using optional chaining
 
@@ -155,7 +161,7 @@ const game = (() => {
 		player1Wins.textContent = "-";
 		player2Wins.textContent = "-";
 		numberOfTies.textContent = "-";
-		startGame(document.querySelector(".toggle-game-mode").dataset.mode);
+		startGame(toggleGameMode.dataset.mode);
 	};
 	const chooseGameMode = e => {
 		let mode = e.target.dataset.mode === "1" ? "2" : "1";
@@ -183,6 +189,7 @@ const game = (() => {
 			aiPlay();
 		}
 		activateBoard();
+		activateSelectModeButton();
 	};
 
 	// Event listener
@@ -244,6 +251,7 @@ const game = (() => {
 						deactivateBoard();
 						currentPlayer = null;
 						displayCurrentPlayer();
+						deactivateSelectModeButton();
 						return;
 					}
 				}
@@ -261,6 +269,7 @@ const game = (() => {
 						deactivateBoard();
 						currentPlayer = null;
 						displayCurrentPlayer();
+						deactivateSelectModeButton();
 						return;
 					}
 				}
@@ -281,6 +290,7 @@ const game = (() => {
 				deactivateBoard();
 				currentPlayer = null;
 				displayCurrentPlayer();
+				deactivateSelectModeButton();
 				return;
 			}
 		} else {
@@ -296,6 +306,7 @@ const game = (() => {
 			deactivateBoard();
 			currentPlayer = null;
 			displayCurrentPlayer();
+			deactivateSelectModeButton();
 			return;
 		}
 		if (game.getCurrentPlayer().name === "computer") {
