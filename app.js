@@ -96,7 +96,6 @@ let clickCount = 0;
 const makeSelection = (e, player) => {
 	e.stopPropagation();
 	clickCount++;
-	console.log("click: ", clickCount);
 	setTimeout(() => {
 		clickCount = 0;
 	}, 200);
@@ -131,8 +130,6 @@ const makeSelection = (e, player) => {
 		}
 	}
 };
-
-// let currentPlayer = player2;
 
 const boardGrid = document.querySelectorAll(".gameboard > .grid");
 boardGrid.forEach(grid => {
@@ -287,6 +284,14 @@ const game = (() => {
 		}, 200);
 	};
 
+	const lockGame = () => {
+		gameEnded.style.display = "flex";
+		deactivateBoard();
+		currentPlayer = null;
+		displayCurrentPlayer();
+		deactivateSelectModeButton();
+	};
+
 	const playGame = () => {
 		if (round <= 9) {
 			if (round > 4) {
@@ -295,16 +300,11 @@ const game = (() => {
 					if (won) {
 						numOfGamesWonByPlayer2++;
 						player2Wins.textContent = numOfGamesWonByPlayer2;
-						// playerTurn.textContent = "Game Over";
 						gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-circle">radio_button_unchecked</span>
 						</div>
 						<div class="info">Winner!</div>`;
-						gameEnded.style.display = "flex";
-						deactivateBoard();
-						currentPlayer = null;
-						displayCurrentPlayer();
-						deactivateSelectModeButton();
+						lockGame();
 						return;
 					}
 				}
@@ -313,16 +313,11 @@ const game = (() => {
 					if (won) {
 						numOfGamesWonByPlayer1++;
 						player1Wins.textContent = numOfGamesWonByPlayer1;
-						// document.querySelector(".player-turn").textContent = "Game Over";
 						gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-x">close</span>
 						</div>
 						<div class="info">Winner!</div>`;
-						gameEnded.style.display = "flex";
-						deactivateBoard();
-						currentPlayer = null;
-						displayCurrentPlayer();
-						deactivateSelectModeButton();
+						lockGame();
 						return;
 					}
 				}
@@ -333,34 +328,14 @@ const game = (() => {
 			if (round > 9) {
 				ties++;
 				numberOfTies.textContent = ties;
-				// playerTurn.textContent = "Game Over";
 				gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-circle">radio_button_unchecked</span>
 							<span class="material-icons ended-x">close</span>
 						</div>
 						<div class="info">Draw!</div>`;
-				gameEnded.style.display = "flex";
-				deactivateBoard();
-				currentPlayer = null;
-				displayCurrentPlayer();
-				deactivateSelectModeButton();
+				lockGame();
 				return;
 			}
-		} else {
-			ties++;
-			numberOfTies.textContent = ties;
-			// playerTurn.textContent = "Game Over";
-			gameEnded.innerHTML = `<div class="players-tag">
-							<span class="material-icons ended-circle">radio_button_unchecked</span>
-							<span class="material-icons ended-x">close</span>
-						</div>
-						<div class="info">Draw!</div>`;
-			gameEnded.style.display = "flex";
-			deactivateBoard();
-			currentPlayer = null;
-			displayCurrentPlayer();
-			deactivateSelectModeButton();
-			return;
 		}
 		if (game.getCurrentPlayer().name === "computer") {
 			game.aiPlay();
