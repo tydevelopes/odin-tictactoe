@@ -117,6 +117,26 @@ const game = (() => {
 	const gameEnded = document.querySelector(".game-ended");
 	const restartEl = document.querySelector(".restart");
 	const toggleGameMode = document.querySelector(".toggle-game-mode");
+	const firstPlayerLabel = document.querySelector(".first-player");
+	const secondPlayerLabel = document.querySelector(".second-player");
+
+	const displayCurrentPlayer = () => {
+		// get current player using optional chaining
+
+		if (currentPlayer?.tag === "x") {
+			firstPlayerLabel.classList.add("current-player-indicator");
+			secondPlayerLabel.classList.remove("current-player-indicator");
+			playerTurn.textContent = `${currentPlayer.name} (${currentPlayer?.tag}) turn`;
+		} else if (currentPlayer?.tag === "o") {
+			firstPlayerLabel.classList.remove("current-player-indicator");
+			secondPlayerLabel.classList.add("current-player-indicator");
+			playerTurn.textContent = `${currentPlayer.name} (${currentPlayer?.tag}) turn`;
+		} else {
+			firstPlayerLabel.classList.remove("current-player-indicator");
+			secondPlayerLabel.classList.remove("current-player-indicator");
+			playerTurn.textContent = "Game Over";
+		}
+	};
 
 	const deactivateBoard = () => {
 		document.querySelectorAll(".gameboard > .grid").forEach(grid => {
@@ -155,7 +175,7 @@ const game = (() => {
 		player2.selection = "";
 		clearBoard();
 		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
-		playerTurn.textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
+		displayCurrentPlayer();
 		if (currentPlayer.name === "computer") {
 			aiPlay();
 		}
@@ -189,8 +209,7 @@ const game = (() => {
 		}
 		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
 
-		// get current player
-		document.querySelector(".player-turn").textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
+		displayCurrentPlayer();
 
 		if (currentPlayer.name === "computer") {
 			aiPlay();
@@ -213,13 +232,15 @@ const game = (() => {
 					if (won) {
 						numOfGamesWonByPlayer2++;
 						player2Wins.textContent = numOfGamesWonByPlayer2;
-						document.querySelector(".player-turn").textContent = "Game Over";
+						// playerTurn.textContent = "Game Over";
 						gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-circle">radio_button_unchecked</span>
 						</div>
 						<div class="info">Winner!</div>`;
 						gameEnded.style.display = "flex";
 						deactivateBoard();
+						currentPlayer = null;
+						displayCurrentPlayer();
 						return;
 					}
 				}
@@ -228,25 +249,26 @@ const game = (() => {
 					if (won) {
 						numOfGamesWonByPlayer1++;
 						player1Wins.textContent = numOfGamesWonByPlayer1;
-						document.querySelector(".player-turn").textContent = "Game Over";
+						// document.querySelector(".player-turn").textContent = "Game Over";
 						gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-x">close</span>
 						</div>
 						<div class="info">Winner!</div>`;
 						gameEnded.style.display = "flex";
 						deactivateBoard();
+						currentPlayer = null;
+						displayCurrentPlayer();
 						return;
 					}
 				}
 			}
-			// get current player
-			document.querySelector(".player-turn").textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
+			displayCurrentPlayer();
 
 			round++;
 			if (round > 9) {
 				ties++;
 				numberOfTies.textContent = ties;
-				document.querySelector(".player-turn").textContent = "Game Over";
+				// playerTurn.textContent = "Game Over";
 				gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-circle">radio_button_unchecked</span>
 							<span class="material-icons ended-x">close</span>
@@ -254,12 +276,14 @@ const game = (() => {
 						<div class="info">Draw!</div>`;
 				gameEnded.style.display = "flex";
 				deactivateBoard();
+				currentPlayer = null;
+				displayCurrentPlayer();
 				return;
 			}
 		} else {
 			ties++;
 			numberOfTies.textContent = ties;
-			document.querySelector(".player-turn").textContent = "Game Over";
+			// playerTurn.textContent = "Game Over";
 			gameEnded.innerHTML = `<div class="players-tag">
 							<span class="material-icons ended-circle">radio_button_unchecked</span>
 							<span class="material-icons ended-x">close</span>
@@ -267,6 +291,8 @@ const game = (() => {
 						<div class="info">Draw!</div>`;
 			gameEnded.style.display = "flex";
 			deactivateBoard();
+			currentPlayer = null;
+			displayCurrentPlayer();
 			return;
 		}
 		if (game.getCurrentPlayer().name === "computer") {
