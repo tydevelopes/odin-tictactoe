@@ -112,7 +112,7 @@ body {
 	border: 1px solid rgba(255, 255, 255, 0.1);
 	border-radius: 0.5rem;
 	padding: 1rem 1.5rem;
-	border-bottom: none;
+	border-bottom: 3px solid rgba(0, 0, 0, 0);
 }
 .current-player-indicator {
 	border-bottom: 3px solid var(--primary-color);
