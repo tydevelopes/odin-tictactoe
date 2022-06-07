@@ -152,6 +152,9 @@ const game = (() => {
 	const restart = () => {
 		setVariables();
 		clearBoard();
+		player1Wins.textContent = "-";
+		player2Wins.textContent = "-";
+		numberOfTies.textContent = "-";
 		startGame(document.querySelector(".toggle-game-mode").dataset.mode);
 	};
 	const chooseGameMode = e => {
