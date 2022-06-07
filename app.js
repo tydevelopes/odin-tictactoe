@@ -39,6 +39,57 @@ const Player = (name, tag) => {
 	};
 };
 
+const animateBoard = () => {
+	document
+		.querySelector(".gameboard > .lines:nth-child(1)")
+		.animate(
+			[
+				{ width: "calc(100% / 3)" },
+				{ transform: "translate(calc(-100% / 3 + 5px), calc(-100% + 10px))", width: "calc(100% - 4rem)" },
+			],
+			{
+				fill: "forwards",
+				duration: 200,
+			}
+		);
+	document
+		.querySelector(".gameboard > .lines:nth-child(2)")
+		.animate(
+			[
+				{ width: "calc(100% / 3)" },
+				{ transform: "translate(calc(-100% / 3 + 5px), calc(-100% - 4px))", width: "calc(100% - 4rem)" },
+			],
+			{
+				fill: "forwards",
+				duration: 200,
+			}
+		);
+	document
+		.querySelector(".gameboard > .lines:nth-child(3)")
+		.animate(
+			[
+				{ height: "calc(100% / 3)" },
+				{ transform: "translate(calc(-100% + 10px), calc(-100% / 3 + 5px))", height: "calc(100% - 4rem)" },
+			],
+			{
+				fill: "forwards",
+				duration: 200,
+			}
+		);
+	document
+		.querySelector(".gameboard > .lines:nth-child(4)")
+		.animate(
+			[
+				{ height: "calc(100% / 3)" },
+				{ transform: "translate(calc(-100% - 4px), calc(-100% / 3 + 5px))", height: "calc(100% - 4rem)" },
+			],
+			{
+				fill: "forwards",
+				duration: 200,
+			}
+		);
+};
+
 // prevent multiple clicks
 let clickCount = 0;
 
@@ -158,6 +209,7 @@ const game = (() => {
 	const restart = () => {
 		setVariables();
 		clearBoard();
+		animateBoard();
 		player1Wins.textContent = "-";
 		player2Wins.textContent = "-";
 		numberOfTies.textContent = "-";
@@ -183,6 +235,7 @@ const game = (() => {
 		player1.selection = "";
 		player2.selection = "";
 		clearBoard();
+		animateBoard();
 		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
 		displayCurrentPlayer();
 		if (currentPlayer.name === "computer") {
@@ -344,7 +397,8 @@ const game = (() => {
 	};
 })();
 
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", () => {
+	animateBoard();
 	game.setVariables();
 	game.startGame("1");
 });
