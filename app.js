@@ -115,6 +115,8 @@ const game = (() => {
 	const numberOfTies = document.querySelector(".num-of-ties");
 	const playerTurn = document.querySelector(".player-turn");
 	const gameEnded = document.querySelector(".game-ended");
+	const restartEl = document.querySelector(".restart");
+	const toggleGameMode = document.querySelector(".toggle-game-mode");
 
 	const deactivateBoard = () => {
 		document.querySelectorAll(".gameboard > .grid").forEach(grid => {
@@ -127,17 +129,32 @@ const game = (() => {
 		});
 	};
 
-	const reset = () => {
-		round = 1;
-		gameFinished = false;
-		player1.selectedGrids = [];
-		player2.selectedGrids = [];
-		player1.selection = "";
-		player2.selection = "";
+	const restart = () => {
+		setVariables();
+		clearBoard();
+		startGame(document.querySelector(".toggle-game-mode").dataset.mode);
+	};
+	const chooseGameMode = e => {
+		let mode = e.target.dataset.mode === "1" ? "2" : "1";
+		e.target.dataset.mode = mode;
+		e.target.textContent = mode === "1" ? "start two player" : "play with computer";
+		restart();
+	};
+	const clearBoard = () => {
 		document.querySelectorAll(".gameboard > .grid").forEach(el => {
 			el.dataset.selected = false;
 			el.innerHTML = "";
 		});
+	};
+
+	const reset = () => {
+		round = 1;
+		player1.selectedGrids = [];
+		player2.selectedGrids = [];
+		player1.selection = "";
+		player2.selection = "";
+		clearBoard();
+		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
 		playerTurn.textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
 		if (currentPlayer.name === "computer") {
 			aiPlay();
@@ -146,6 +163,9 @@ const game = (() => {
 	};
 
 	// Event listener
+	toggleGameMode.addEventListener("click", chooseGameMode);
+	restartEl.addEventListener("click", restart);
+
 	gameEnded.addEventListener("click", e => {
 		reset();
 		e.currentTarget.style.display = "none";
@@ -168,6 +188,9 @@ const game = (() => {
 				break;
 		}
 		currentPlayer = [player1, player2][Math.floor(Math.random() * 2)];
+
+		// get current player
+		document.querySelector(".player-turn").textContent = `${currentPlayer.name} (${currentPlayer.tag}) turn`;
 
 		if (currentPlayer.name === "computer") {
 			aiPlay();
@@ -284,8 +307,4 @@ const game = (() => {
 window.addEventListener("load", () => {
 	game.setVariables();
 	game.startGame("1");
-	// get current player
-	document.querySelector(".player-turn").textContent = `${game.getCurrentPlayer().name} (${
-		game.getCurrentPlayer().tag
-	}) turn`;
 });

@@ -169,15 +169,23 @@ body {
 }
 button {
 	border: none;
-	outline: 1px solid var(--primary-color);
-	color: var(--primary-color);
-	padding: 1rem;
-	background-color: transparent;
-	border-radius: 0.5rem;
-}
-button:hover {
 	color: var(--xcolor);
 	background-color: var(--primary-color);
+	padding: 1rem;
+	/* background-color: transparent; */
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.4s;
+}
+button:hover {
+	/* outline: 1px solid var(--primary-color); */
+	/* color: var(--primary-color); */
+	transform: scale(1.01);
+}
+button:disabled {
+	background-color: var(--primary-color);
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 .restart {
 	align-self: center;
